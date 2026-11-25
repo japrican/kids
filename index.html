@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<title>学びのミカタ キッズ｜3〜6さいの知育アプリ</title>
+<meta name="description" content="3〜6さいの、ちえ・かず・もじ・ABC・とけい。親子でいっしょに、見て考えて遊べる知育アプリ。">
+<meta name="theme-color" content="#ffffff">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@800&family=Klee+One:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#3c3c3c;--mute:#8a8a8a;--line:#e5e5e5;--green:#58cc02;--green-d:#58a700;--red:#ff4b4b;--blue:#1cb0f6;--blue-d:#1899d6;--sun:#ffc800;--sun-d:#e5a500;
+ --round:'M PLUS Rounded 1c','Hiragino Maru Gothic ProN',sans-serif;--kana:'UD デジタル 教科書体 NK-R','UD Digital Kyokasho NK-R','Klee One','M PLUS Rounded 1c',serif;--c:#58cc02;--cd:#58a700;--cl:#e9fbd9}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
+html,body{background:#fff;overscroll-behavior:none}
+body{font-family:var(--round);font-weight:800;color:var(--ink)}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+.ic{width:1em;height:1em;display:inline-block;vertical-align:-.13em}
+.app{max-width:620px;margin:0 auto;padding:0 16px 120px;min-height:100vh}
+.scr{display:none}.scr.on{display:block;animation:fade .25s}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}}
+/* 上 */
+.top{display:flex;align-items:center;gap:10px;padding:14px 0 6px}
+.logo{width:44px;height:44px;border-radius:14px;background:var(--green);box-shadow:0 3px 0 var(--green-d);color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px}
+.top h1{font-size:19px;line-height:1.2}.top h1 small{display:block;font-size:11px;color:var(--mute)}
+.tbtn{margin-left:auto;display:flex;gap:6px}
+.chip{display:flex;align-items:center;gap:5px;border:2px solid var(--line);border-bottom-width:4px;border-radius:14px;padding:5px 11px;font-size:16px}
+.chip .ic{font-size:20px}
+.trial{display:none;align-items:center;gap:8px;background:#fff4d6;border:2px solid #ffe1a1;color:#9a5b00;border-radius:14px;padding:7px 10px 7px 14px;margin-top:12px;font-size:13px}
+.trial.on{display:flex}body:not(.navon) .trial{display:none!important}.trial button{margin-left:auto;background:var(--sun);border-radius:10px;padding:5px 12px;box-shadow:0 3px 0 var(--sun-d);font-size:12px}
+/* 分野タブ */
+.cats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0 6px}
+.cat{border:2px solid var(--line);border-bottom-width:5px;border-radius:18px;padding:10px 2px 8px;text-align:center}
+.cat .ci{width:46px;height:46px;margin:0 auto 4px;border-radius:14px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:24px}
+.cat b{display:block;font-size:14px;line-height:1.2}
+.cat.on{background:var(--cl);border-color:var(--c)}
+.cat:active,.node:active,.opt:active,.chip:active{transform:translateY(3px)}
+.band{background:var(--c);color:#fff;border-radius:20px;padding:14px 16px;box-shadow:0 5px 0 var(--cd);display:flex;align-items:center;gap:12px;margin:8px 0 0}
+.band small{display:block;font-size:12px;opacity:.9}.band b{display:block;font-size:20px;line-height:1.3}
+.band .go{margin-left:auto;width:56px;height:56px;border-radius:16px;background:rgba(255,255,255,.22);border:2px solid rgba(255,255,255,.5);color:#fff;font-size:26px;display:flex;align-items:center;justify-content:center}
+/* 道 */
+.path{display:flex;flex-direction:column;align-items:center;padding:56px 0 10px;gap:16px}
+.nrow{position:relative;display:flex;flex-direction:column;align-items:center;transform:translateX(var(--x))}
+.node{width:84px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:34px;position:relative}
+.node.todo{background:#e5e5e5;color:#b5b5b5;box-shadow:0 8px 0 #cecece}
+.node.cur{background:var(--c);box-shadow:0 8px 0 var(--cd);outline:7px solid var(--cl);outline-offset:4px}
+.node.done{background:var(--c);box-shadow:0 8px 0 var(--cd)}
+.node.gold{background:var(--sun);box-shadow:0 8px 0 var(--sun-d)}
+.node .ic{font-size:36px}
+.bub{position:absolute;top:-48px;background:#fff;color:var(--c);border:2px solid var(--line);border-radius:12px;padding:5px 14px;font-size:15px;white-space:nowrap;animation:bob 1.6s ease-in-out infinite;z-index:2}
+.bub::after{content:'';position:absolute;left:50%;bottom:-8px;width:12px;height:12px;background:#fff;border-right:2px solid var(--line);border-bottom:2px solid var(--line);transform:translateX(-50%) rotate(45deg)}
+@keyframes bob{50%{transform:translateY(-5px)}}
+.nst{display:flex;gap:2px;margin-top:12px;font-size:15px;color:#e5e5e5}.nst .on{color:var(--sun)}
+.nt{font-size:13px;margin-top:2px;text-align:center}
+.nmon{position:absolute;top:0;width:80px;height:80px}.nmon.l{right:110px}.nmon.r{left:110px}.nmon.dim{filter:grayscale(1) opacity(.3)}
+/* 下ナビ */
+.bnav{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:2px solid var(--line);display:none;justify-content:center;gap:4px;padding:6px 10px calc(8px + env(safe-area-inset-bottom));z-index:40}
+body.navon .bnav{display:flex}
+.bnav button,.bnav a{flex:1;max-width:150px;border:2px solid transparent;border-radius:14px;padding:5px;display:flex;flex-direction:column;align-items:center;font-size:12px;color:var(--mute);text-decoration:none}
+.bnav .bi{font-size:26px;color:#b5b5b5}.bnav .on{border-color:#84d8ff;background:#ddf4ff;color:var(--blue-d)}.bnav .on .bi{color:var(--blue)}
+/* 問題 */
+.qbar{display:flex;align-items:center;gap:12px;padding:16px 0 8px}
+.xbtn{font-size:28px;color:#b5b5b5;display:flex}
+.pbar{flex:1;height:18px;background:#e5e5e5;border-radius:9px;overflow:hidden}.pbar i{display:block;height:100%;background:var(--green);border-radius:9px;transition:width .4s}
+.say{display:flex;align-items:center;gap:12px;margin:8px 0 6px}
+.saybtn{width:64px;height:64px;border-radius:20px;background:var(--blue);box-shadow:0 5px 0 var(--blue-d);color:#fff;font-size:32px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.saybtn.play{animation:pulse .8s ease-in-out infinite}
+@keyframes pulse{50%{transform:scale(1.06)}}
+.qtxt{font-size:22px;line-height:1.45;padding:4px 2px}
+.bigch{font-family:var(--kana);font-weight:600;font-size:110px;line-height:1.1}.bigch.en,.opt.kana.en{font-family:var(--round);font-weight:800}
+.digi{font-family:var(--round);font-size:64px;background:#3c3c3c;color:#7dff6a;border-radius:16px;padding:6px 22px;letter-spacing:2px}
+.stage{min-height:150px;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;margin:6px 0 12px;padding:10px;border-radius:22px;background:#f7f7f7}
+.stage:empty{display:none}
+.stage svg{display:block}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.opts.three{grid-template-columns:1fr 1fr 1fr}
+.opt{border:3px solid var(--line);border-bottom-width:6px;border-radius:22px;min-height:120px;display:flex;align-items:center;justify-content:center;padding:8px;background:#fff;font-size:56px;line-height:1}
+.opt.kana{font-family:var(--kana);font-weight:600;font-size:72px}
+.opt.num{font-size:64px}
+.opt.txt{font-size:30px}
+.opt svg{max-width:100%;height:auto}
+.opt.ok{border-color:var(--green);background:#d7ffb8;animation:okp .45s cubic-bezier(.2,1.6,.4,1)}
+.opt.ng{border-color:var(--red);background:#ffdfe0;animation:shake .45s}
+@keyframes okp{40%{transform:scale(1.07)}}
+@keyframes shake{20%,60%{transform:translateX(-9px)}40%,80%{transform:translateX(9px)}}
+.big{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:60}
+.big span{font-size:220px;color:var(--green);opacity:0;line-height:1}
+.big.show span{animation:bigok .9s ease-out}
+@keyframes bigok{0%{opacity:0;transform:scale(.3)}30%{opacity:.95;transform:scale(1.05)}80%{opacity:.9}100%{opacity:0;transform:scale(1.1)}}
+/* 結果 */
+.res{text-align:center;padding:30px 0}
+.res .mon{width:170px;height:170px;margin:0 auto;animation:okp .8s .2s backwards}
+.res h2{font-size:30px;margin:10px 0 4px}
+.bigst{display:flex;justify-content:center;gap:8px;font-size:60px;color:#e5e5e5;margin:6px 0}.bigst .on{color:var(--sun)}
+.btn{display:block;width:100%;border-radius:20px;padding:16px;font-size:20px;text-align:center;margin-top:12px}
+.btn.pri{background:var(--green);color:#fff;box-shadow:0 5px 0 var(--green-d)}
+.btn.sub{border:2px solid var(--line);border-bottom-width:5px;color:var(--blue-d)}
+/* あそびば */
+.glist{display:grid;gap:12px;margin-top:12px}
+.gcard{display:flex;align-items:center;gap:14px;border:2px solid var(--line);border-bottom-width:5px;border-radius:20px;padding:14px;text-align:left}
+.gcard:active{transform:translateY(3px)}
+.gi{width:62px;height:62px;border-radius:18px;background:var(--gc);box-shadow:0 4px 0 var(--gd);color:#fff;font-size:34px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.gcard b{display:block;font-size:20px}.gcard small{display:block;font-size:13px;color:var(--mute);margin-top:2px}
+.ghead{flex:1;display:flex;align-items:center;gap:8px;font-size:18px}
+.ghead .tgt{width:34px;height:34px;border-radius:50%}
+.mem{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+.mc{aspect-ratio:1;border-radius:18px;border:3px solid var(--line);border-bottom-width:6px;background:#fff;display:flex;align-items:center;justify-content:center;perspective:400px}
+.mc .bk{width:100%;height:100%;border-radius:14px;background:repeating-linear-gradient(45deg,#1cb0f6 0 10px,#49c0f8 10px 20px)}
+.mc.open .bk,.mc.got .bk{display:none}.mc svg{display:none}.mc.open svg,.mc.got svg{display:block}
+.mc.got{border-color:var(--green);background:#d7ffb8}
+.tch{position:relative;height:min(118vw,600px);margin-top:10px;background:#f7f7f7;border-radius:22px}
+.tn{position:absolute;width:64px;height:64px;margin:-32px 0 0 -32px;border-radius:50%;color:#fff;font-size:30px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 0 rgba(0,0,0,.18)}
+.tn.done{opacity:.15;pointer-events:none}.tn.ng{animation:shake .4s}
+.sky{position:relative;height:min(130vw,640px);margin-top:10px;background:linear-gradient(#ddf4ff,#fff);border-radius:22px;overflow:hidden}
+.bl{position:absolute;bottom:-120px;width:70px;height:96px;animation:rise linear forwards}
+.bl.pop{animation:popb .25s forwards}
+@keyframes rise{to{transform:translateY(calc(-1 * min(130vw,640px) - 140px))}}
+@keyframes popb{to{transform:scale(1.6);opacity:0}}
+.mz{display:block;margin:10px auto 0;touch-action:none;background:#fff;border-radius:18px;border:3px solid var(--line)}
+.gdone{text-align:center;padding:30px 0}.gdone h2{font-size:30px;margin:10px 0}
+/* ずかん */
+.zk{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:10px}
+.zc{border:2px solid var(--line);border-bottom-width:4px;border-radius:16px;padding:6px;aspect-ratio:1;display:flex;align-items:center;justify-content:center}
+.zc.no{background:#f7f7f7;border-color:#efefef;color:#cfcfcf;font-size:28px}
+.zc.shiny{background:#fff4d6;border-color:#ffd15c}
+/* 保護者 */
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
+.ov.on{display:flex}
+.ovb{background:#fff;border-radius:22px;padding:22px;max-width:400px;width:100%;text-align:center;font-family:'BIZ UDPGothic',sans-serif}
+.ovb h3{font-family:var(--round);font-size:19px;margin-bottom:6px}
+.ovb p{font-size:13px;color:var(--mute);margin-bottom:12px;font-weight:700;line-height:1.7}
+.gate{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}
+.gate button{border:2px solid var(--line);border-bottom-width:4px;border-radius:12px;padding:10px;font-size:20px;font-family:var(--round)}
+.btn.buy{background:var(--blue);color:#fff;box-shadow:0 5px 0 var(--blue-d);text-decoration:none;font-family:var(--round)}
+.cf{position:fixed;top:-12px;width:10px;height:15px;border-radius:2px;z-index:130;pointer-events:none;animation:fall linear forwards}
+@keyframes fall{to{transform:translate(var(--dx),105vh) rotate(var(--r))}}
+@media(max-width:380px){.opt{min-height:100px}.opt.kana{font-size:60px}}
+</style>
+</head>
+<body>
+<div class="app">
+ <div class="trial" id="trial"><span id="trialText"></span><button onclick="openGate()">おうちの方へ</button></div>
+
+ <section class="scr" id="sHome">
+  <div class="top"><div class="logo" data-ic="sprout"></div><h1><small>学びのミカタ 3〜6さい</small>キッズ</h1>
+   <div class="tbtn"><button class="chip" onclick="toggleSnd()" id="sndBtn" aria-label="おと"></button><div class="chip"><span data-ic="star" style="color:var(--sun)"></span><span id="stars">0</span></div></div></div>
+  <div class="cats" id="cats"></div>
+  <div class="band" id="band"></div>
+  <div class="path" id="path"></div>
+ </section>
+
+ <section class="scr" id="sQuiz">
+  <div class="qbar"><button class="xbtn" onclick="go('sHome')" aria-label="やめる"><span data-ic="x"></span></button><div class="pbar"><i id="qBar"></i></div></div>
+  <div class="say"><div class="qtxt" id="qTxt"></div></div>
+  <div class="stage" id="stage"></div>
+  <div class="opts" id="opts"></div>
+ </section>
+
+ <section class="scr" id="sResult"><div class="res" id="res"></div></section>
+
+ <section class="scr" id="sGame">
+  <div class="top"><div class="logo" style="background:#ff9600;box-shadow:0 3px 0 #d97000" data-ic="game"></div><h1><small>ちょっと ひといき</small>あそびば</h1></div>
+  <div class="glist">
+   <button class="gcard" onclick="startGame('memory')" style="--gc:#1cb0f6;--gd:#1899d6"><div class="gi" data-ic="cards"></div><div><b>えあわせ</b><small>おなじ えを 2まい さがそう</small></div></button>
+   <button class="gcard" onclick="startGame('touch')" style="--gc:#58cc02;--gd:#58a700"><div class="gi" data-ic="num"></div><div><b>かずタッチ</b><small>1から じゅんばんに タッチ</small></div></button>
+   <button class="gcard" onclick="startGame('balloon')" style="--gc:#ce82ff;--gd:#a568cc"><div class="gi" data-ic="balloon"></div><div><b>ふうせんわり</b><small>おなじ いろの ふうせんを わろう</small></div></button>
+   <button class="gcard" onclick="startGame('maze')" style="--gc:#ff9600;--gd:#d97000"><div class="gi" data-ic="maze"></div><div><b>めいろ</b><small>なぞって ゴールまで いこう</small></div></button>
+  </div>
+ </section>
+
+ <section class="scr" id="sPlay">
+  <div class="qbar"><button class="xbtn" onclick="endGame();go('sGame')" aria-label="やめる"><span data-ic="x"></span></button><div class="ghead" id="gHead"></div></div>
+  <div id="gBoard"></div>
+ </section>
+
+ <section class="scr" id="sZukan">
+  <div class="top"><div class="logo" data-ic="paw"></div><h1><small>あつめた なかま</small>ずかん</h1></div>
+  <div class="zk" id="zk"></div>
+ </section>
+</div>
+<div class="big" id="big"><span data-ic="circle"></span></div>
+
+<nav class="bnav" id="bnav">
+ <button data-k="home" onclick="go('sHome')"><span class="bi" data-ic="home"></span>あそぶ</button>
+ <button data-k="game" onclick="go('sGame')"><span class="bi" data-ic="game"></span>ゲーム</button>
+ <button data-k="zukan" onclick="go('sZukan')"><span class="bi" data-ic="paw"></span>ずかん</button>
+ <button onclick="openGate()"><span class="bi" data-ic="lock"></span>おうちの方へ</button>
+</nav>
+
+<div class="ov" id="ovGate"><div class="ovb">
+ <h3>おうちの方へ</h3>
+ <p id="gateMsg">お子さまの誤操作を防ぐため、かんたんな問題に答えてください。</p>
+ <div style="font-size:26px;font-family:var(--round)" id="gateQ"></div>
+ <div class="gate" id="gateOpts"></div>
+ <button class="btn sub" onclick="closeOv('ovGate')">とじる</button>
+ 
+</div></div>
+<div class="ov" id="ovBuy"><div class="ovb">
+ <h3 id="buyTtl">学びのミカタ キッズ</h3>
+ <p>ちえ・かず・もじ・ABCととけいの全32ステージと、あそびばのゲームが使えます。<br>買い切り 980円（税込）。月額料金はかかりません。</p>
+ <a class="btn buy" href="https://buy.stripe.com/00w5kw1oQ672eGw1DU5wI0f">購入する</a>
+ <button class="btn sub" id="buyClose" onclick="closeOv('ovBuy')">とじる</button>
+</div></div>
+
+<script>
+const APP_ID='kids';
+function monSVG(u,shiny){
+  const h=u.hue,c1=`hsl(${h},88%,${shiny?62:57}%)`,c2=`hsl(${h},95%,${shiny?82:76}%)`,c3=`hsl(${h},75%,30%)`,v=u.id%4;
+  const body=[
+    `<path d="M50 12 C80 12 90 40 88 62 C86 84 70 92 50 92 C30 92 14 84 12 62 C10 40 20 12 50 12Z" fill="${c1}"/>`,
+    `<rect x="14" y="20" width="72" height="70" rx="26" fill="${c1}"/><path d="M26 22 L32 6 L40 22Z M60 22 L68 6 L74 22Z" fill="${c3}"/>`,
+    `<path d="M50 8 L90 86 Q50 98 10 86Z" fill="${c1}" stroke="${c1}" stroke-width="10" stroke-linejoin="round"/>`,
+    `<circle cx="50" cy="56" r="38" fill="${c1}"/><circle cx="22" cy="24" r="10" fill="${c1}"/><circle cx="78" cy="24" r="10" fill="${c1}"/><circle cx="22" cy="24" r="5" fill="${c2}"/><circle cx="78" cy="24" r="5" fill="${c2}"/>`][v];
+  const eyes=u.id%3===0?`<circle cx="50" cy="50" r="13" fill="white"/><circle cx="52" cy="51" r="6" fill="#1c2b2a"/><circle cx="54" cy="48" r="2" fill="white"/>`
+    :`<circle cx="38" cy="50" r="9" fill="white"/><circle cx="62" cy="50" r="9" fill="white"/><circle cx="39" cy="51" r="4.5" fill="#1c2b2a"/><circle cx="63" cy="51" r="4.5" fill="#1c2b2a"/><circle cx="40" cy="49" r="1.6" fill="white"/><circle cx="64" cy="49" r="1.6" fill="white"/>`;
+  const mouth=u.id%2?`<path d="M40 68 Q50 78 60 68" stroke="#1c2b2a" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M44 69 L46 74 L48 70Z" fill="white"/>`
+    :`<path d="M42 68 Q50 74 58 68" stroke="#1c2b2a" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+  const sym=['+','−','×','÷','%','=','<','√'][u.id%8];
+  const sparkle=shiny?`<path d="M84 10 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3Z" fill="#fbbf24"/><path d="M14 74 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2Z" fill="#fbbf24"/>`:'';
+  return `<svg viewBox="0 0 100 100" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">${body}<ellipse cx="50" cy="80" rx="18" ry="8" fill="${c2}"/>
+<circle cx="28" cy="64" r="5" fill="${c2}" opacity=".9"/><circle cx="72" cy="64" r="5" fill="${c2}" opacity=".9"/>${eyes}${mouth}
+${sparkle}</svg>`;
+}
+
+/* ===================== アイコン ===================== */
+const IC={
+ star:'<svg viewBox="0 0 24 24" class="ic"><path d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.4l-5.8 3.1 1.1-6.5L2.6 9.4l6.5-.9z" fill="currentColor"/></svg>',
+ sound:'<svg viewBox="0 0 24 24" class="ic"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16.5 8.5a5 5 0 010 7M19 6a8.5 8.5 0 010 12" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg>',
+ mute:'<svg viewBox="0 0 24 24" class="ic"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16.5 9.5l5 5m0-5l-5 5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>',
+ play:'<svg viewBox="0 0 24 24" class="ic"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg>',
+ check:'<svg viewBox="0 0 24 24" class="ic"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="currentColor" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+ x:'<svg viewBox="0 0 24 24" class="ic"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>',
+ home:'<svg viewBox="0 0 24 24" class="ic"><path d="M3.5 11L12 4l8.5 7v9a1 1 0 01-1 1h-5v-6h-5v6h-5a1 1 0 01-1-1z" fill="currentColor"/></svg>',
+ paw:'<svg viewBox="0 0 24 24" class="ic"><ellipse cx="12" cy="15.5" rx="5" ry="4.2" fill="currentColor"/><circle cx="6" cy="10" r="2.2" fill="currentColor"/><circle cx="9.5" cy="6.5" r="2.2" fill="currentColor"/><circle cx="14.5" cy="6.5" r="2.2" fill="currentColor"/><circle cx="18" cy="10" r="2.2" fill="currentColor"/></svg>',
+ lock:'<svg viewBox="0 0 24 24" class="ic"><rect x="5" y="10.5" width="14" height="10" rx="2.5" fill="currentColor"/><path d="M8 10.5V8a4 4 0 018 0v2.5" stroke="currentColor" stroke-width="2.4" fill="none"/></svg>',
+ game:'<svg viewBox="0 0 24 24" class="ic"><rect x="2.5" y="7" width="19" height="11" rx="5.5" fill="currentColor"/><path d="M7.5 10.2v4.6M5.2 12.5h4.6" stroke="#fff" stroke-width="2" stroke-linecap="round"/><circle cx="15.5" cy="11" r="1.3" fill="#fff"/><circle cx="18" cy="13.6" r="1.3" fill="#fff"/></svg>',
+ cards:'<svg viewBox="0 0 24 24" class="ic"><rect x="3" y="5" width="10" height="14" rx="2.5" fill="currentColor" transform="rotate(-10 8 12)"/><rect x="11" y="5" width="10" height="14" rx="2.5" fill="currentColor" opacity=".7" transform="rotate(10 16 12)"/></svg>',
+ num:'<svg viewBox="0 0 24 24" class="ic"><text x="12" y="18" text-anchor="middle" font-size="16" font-weight="900" fill="currentColor" font-family="sans-serif">123</text></svg>',
+ balloon:'<svg viewBox="0 0 24 24" class="ic"><ellipse cx="12" cy="9.5" rx="6.5" ry="7.5" fill="currentColor"/><path d="M12 17l-1.2 1.6h2.4zM12 18.6c-1.5 2 1.5 2.5 0 4" stroke="currentColor" stroke-width="1.4" fill="currentColor"/></svg>',
+ maze:'<svg viewBox="0 0 24 24" class="ic"><path d="M4 4h16v16H4zM8 4v8h4M16 8v12M8 16h4" stroke="currentColor" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+ circle:'<svg viewBox="0 0 24 24" class="ic"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="3" fill="none"/></svg>',
+ sprout:'<svg viewBox="0 0 24 24" class="ic"><path d="M12 21v-8" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M12 13C12 8 8.5 5 4 5c0 4.5 3 8 8 8z" fill="currentColor"/><path d="M12 11c0-4 3-7 8-7 0 4-3 7-8 7z" fill="currentColor" opacity=".8"/></svg>',
+ bulb:'<svg viewBox="0 0 24 24" class="ic"><path d="M12 2.5a6.5 6.5 0 00-3.8 11.8c.6.5.8 1 .8 1.7V17h6v-1c0-.7.3-1.2.8-1.7A6.5 6.5 0 0012 2.5z" fill="currentColor"/><rect x="9" y="18.5" width="6" height="2.5" rx="1.2" fill="currentColor"/></svg>',
+ dice:'<svg viewBox="0 0 24 24" class="ic"><rect x="3.5" y="3.5" width="17" height="17" rx="4" fill="currentColor"/><circle cx="8.5" cy="8.5" r="1.7" fill="#fff"/><circle cx="15.5" cy="15.5" r="1.7" fill="#fff"/><circle cx="12" cy="12" r="1.7" fill="#fff"/></svg>',
+ aa:'<svg viewBox="0 0 24 24" class="ic"><text x="12" y="18" text-anchor="middle" font-size="17" font-weight="900" fill="currentColor" font-family="sans-serif">あ</text></svg>',
+ abc:'<svg viewBox="0 0 24 24" class="ic"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2.4" fill="none"/><path d="M12 12V7M12 12l3.5 2" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>'
+};
+document.querySelectorAll('[data-ic]').forEach(e=>e.innerHTML=IC[e.dataset.ic]);
+
+/* ===================== 保存・体験 ===================== */
+const ls=(k,v)=>{try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}};
+const PK=APP_ID+'_prog_v1',CK=APP_ID+'_cat_v1';
+let PROG={};try{PROG=JSON.parse(ls(PK))||{}}catch(e){}
+const TRIAL_DAYS=7,UK='app_unlocked_'+APP_ID,TK='app_trial_start_'+APP_ID;
+(function(){const p=new URLSearchParams(location.search);if(p.get('paid')==='1'){ls(UK,'1');history.replaceState(null,'',location.pathname)}if(!ls(TK))ls(TK,String(Date.now()))})();
+const isUnlocked=()=>!!ls(UK);
+const daysLeft=()=>Math.max(0,Math.ceil(TRIAL_DAYS-(Date.now()-parseInt(ls(TK)||Date.now(),10))/864e5));
+const trialOver=()=>!isUnlocked()&&daysLeft()<=0;
+function showTrial(){const t=document.getElementById('trial');if(isUnlocked()){t.classList.remove('on');return}t.classList.add('on');
+ document.getElementById('trialText').textContent=daysLeft()>0?`無料体験中：のこり${daysLeft()}日`:'無料体験が終わりました'}
+let gateAns=0;
+function openGate(){const a=3+Math.floor(Math.random()*7),b=3+Math.floor(Math.random()*7);gateAns=a*b;
+ document.getElementById('gateQ').textContent=`${a} × ${b} = ?`;
+ const c=new Set([gateAns]);while(c.size<6)c.add(gateAns+(Math.floor(Math.random()*13)-6)||1);
+ document.getElementById('gateOpts').innerHTML=shuffle([...c]).map(v=>`<button onclick="gatePick(${v})">${v}</button>`).join('');
+ document.getElementById('ovGate').classList.add('on')}
+function gatePick(v){if(v!==gateAns){openGate();return}closeOv('ovGate');document.getElementById('buyClose').hidden=trialOver();
+ document.getElementById('buyTtl').textContent=isUnlocked()?'購入済みです。ありがとうございます':trialOver()?'無料体験が終わりました':'学びのミカタ キッズ';
+ document.getElementById('ovBuy').classList.add('on')}
+function closeOv(id){document.getElementById(id).classList.remove('on')}
+function guard(){if(trialOver()){openGate();return false}return true}
+
+/* ===================== 音声 ===================== */
+let sndOn=ls('mikata_sfx')!=='off',AC=null;
+function drawSnd(){document.getElementById('sndBtn').innerHTML=sndOn?IC.sound:IC.mute}
+function toggleSnd(){sndOn=!sndOn;ls('mikata_sfx',sndOn?'on':'off');drawSnd()}
+function stopSay(){}
+function tone(f,t0,d,type,vol){const o=AC.createOscillator(),g=AC.createGain();o.type=type||'triangle';o.frequency.value=f;g.gain.setValueAtTime(0,AC.currentTime+t0);
+ g.gain.linearRampToValueAtTime(vol||.16,AC.currentTime+t0+.01);g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+t0+d);o.connect(g);g.connect(AC.destination);o.start(AC.currentTime+t0);o.stop(AC.currentTime+t0+d+.02)}
+function sfx(k){if(!sndOn)return;try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();if(AC.state==='suspended')AC.resume();
+ if(k==='ok'){tone(784,0,.12);tone(1175,.08,.25)}else if(k==='ng'){tone(260,0,.18,'sine',.12)}else if(k==='fin'){[523,659,784,1047,1319].forEach((f,i)=>tone(f,i*.1,.32))}}catch(e){}}
+function confetti(n){const cols=['#58cc02','#1cb0f6','#ffc800','#ff4b4b','#ce82ff','#ff9600'];for(let i=0;i<n;i++){const e=document.createElement('i');e.className='cf';
+ e.style.left=Math.random()*100+'vw';e.style.background=cols[i%6];e.style.setProperty('--dx',(Math.random()*160-80)+'px');e.style.setProperty('--r',(Math.random()*900-450)+'deg');
+ e.style.animationDuration=(1.6+Math.random()*1.4)+'s';e.style.animationDelay=(Math.random()*.4)+'s';document.body.appendChild(e);setTimeout(()=>e.remove(),3600)}}
+
+/* ===================== え（SVG） ===================== */
+const R=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a}
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const COLORS=[['aka','あか','red','#ff4b4b'],['ao','あお','blue','#1cb0f6'],['kiiro','きいろ','yellow','#ffc800'],['midori','みどり','green','#58cc02'],['pink','ピンク','pink','#ff86c8'],['murasaki','むらさき','purple','#a560e8'],['orange','オレンジ','orange','#ff9600'],['kuro','くろ','black','#3c3c3c']];
+const SHAPES=[['maru','まる','circle'],['sankaku','さんかく','triangle'],['shikaku','しかく','square'],['hoshi','ほし','star'],['heart','ハート','heart']];
+function shapeSVG(k,col,s){s=s||90;const d={
+ maru:`<circle cx="50" cy="50" r="40" fill="${col}"/>`,
+ sankaku:`<path d="M50 10 L92 86 H8Z" fill="${col}" stroke="${col}" stroke-width="6" stroke-linejoin="round"/>`,
+ shikaku:`<rect x="12" y="12" width="76" height="76" rx="6" fill="${col}"/>`,
+ hoshi:`<path d="M50 6l12.6 26.4 28.9 3.6-21.2 20 5.5 28.6L50 70.6 24.2 84.6l5.5-28.6-21.2-20 28.9-3.6z" fill="${col}" stroke="${col}" stroke-width="4" stroke-linejoin="round"/>`,
+ heart:`<path d="M50 88S10 63 10 36c0-14 10-24 22-24 9 0 15 5 18 12 3-7 9-12 18-12 12 0 22 10 22 24 0 27-40 52-40 52z" fill="${col}"/>`}[k];
+ return `<svg viewBox="0 0 100 100" width="${s}" height="${s}">${d}</svg>`}
+const PICS={
+ ringo:`<path d="M50 30c-8-8-34-6-34 22 0 22 16 38 26 38 4 0 6-2 8-2s4 2 8 2c10 0 26-16 26-38 0-28-26-30-34-22z" fill="#ff4b4b"/><path d="M50 30c0-8 2-14 6-18" stroke="#8b5a2b" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M54 20c8-8 18-6 20-4-4 8-14 10-20 4z" fill="#58cc02"/><ellipse cx="34" cy="48" rx="5" ry="9" fill="#fff" opacity=".35"/>`,
+ mikan:`<circle cx="50" cy="54" r="36" fill="#ff9600"/><path d="M44 20c4-4 12-4 14 0-4 6-10 6-14 0z" fill="#58cc02"/><circle cx="50" cy="22" r="4" fill="#7a9a2b"/><ellipse cx="36" cy="44" rx="6" ry="9" fill="#fff" opacity=".3"/>`,
+ ichigo:`<path d="M50 92C28 76 16 58 18 40c2-14 18-16 32-10 14-6 30-4 32 10 2 18-10 36-32 52z" fill="#ff4b4b"/><path d="M30 26l10 8 10-12 10 12 10-8-6 14H36z" fill="#58cc02"/>${[[36,48],[56,46],[46,62],[64,60],[32,64],[50,78]].map(([x,y])=>`<ellipse cx="${x}" cy="${y}" rx="2" ry="3" fill="#ffe08a"/>`).join('')}`,
+ banana:`<path d="M18 30c6 30 30 52 66 48 4 0 6-4 2-6-30 2-48-16-56-46-2-6-14-4-12 4z" fill="#ffc800" stroke="#e5a500" stroke-width="3"/><path d="M14 26l6-6 6 6" stroke="#8b5a2b" stroke-width="5" fill="none" stroke-linecap="round"/>`,
+ budou:`${[[38,34],[58,34],[28,52],[48,52],[68,52],[38,70],[58,70],[48,86]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="11" fill="#a560e8"/>`).join('')}<path d="M48 22c0-6 2-10 6-14" stroke="#8b5a2b" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M52 18c8-6 18-4 20 0-6 6-14 6-20 0z" fill="#58cc02"/>`,
+ hana:`${[0,72,144,216,288].map(a=>`<ellipse cx="50" cy="28" rx="13" ry="18" fill="#ff86c8" transform="rotate(${a} 50 46)"/>`).join('')}<circle cx="50" cy="46" r="11" fill="#ffc800"/><path d="M50 60v32" stroke="#58cc02" stroke-width="6" stroke-linecap="round"/><path d="M50 80c-12-4-18-12-18-12 10-2 16 4 18 12z" fill="#58cc02"/>`,
+ sakana:`<path d="M14 50c14-22 44-26 62-6l12-12v36L76 56C58 76 28 72 14 50z" fill="#1cb0f6"/><circle cx="30" cy="46" r="5" fill="#fff"/><circle cx="31" cy="46" r="2.5" fill="#3c3c3c"/><path d="M50 40c4 6 4 14 0 20" stroke="#fff" stroke-width="3" fill="none" opacity=".6"/>`,
+ taiyou:`<circle cx="50" cy="50" r="22" fill="#ffc800"/>${[0,45,90,135,180,225,270,315].map(a=>`<rect x="47" y="8" width="6" height="16" rx="3" fill="#ff9600" transform="rotate(${a} 50 50)"/>`).join('')}`,
+ tsuki:`<path d="M62 12a38 38 0 100 76A30 30 0 1162 12z" fill="#ffc800"/>`,
+ kumo:`<path d="M26 74a16 16 0 010-32 22 22 0 0142-6 18 18 0 016 38z" fill="#9ad7f5"/>`,
+ ame:`${[[30,20],[60,30],[40,56],[70,64],[24,72]].map(([x,y])=>`<path d="M${x} ${y}c6 10 8 14 8 18a8 8 0 01-16 0c0-4 2-8 8-18z" fill="#1cb0f6"/>`).join('')}`,
+ kasa:`<path d="M10 52a40 40 0 0180 0z" fill="#ff4b4b"/><path d="M10 52c7-6 13-6 20 0 7-6 13-6 20 0 7-6 13-6 20 0 7-6 13-6 20 0" fill="#fff" opacity=".25"/><path d="M50 52v32c0 6-10 6-10 0" stroke="#3c3c3c" stroke-width="5" fill="none" stroke-linecap="round"/>`,
+ fuusen:`<ellipse cx="50" cy="40" rx="26" ry="32" fill="#ce82ff"/><path d="M46 72l4 6 4-6z" fill="#ce82ff"/><path d="M50 78c-6 8 6 10 0 18" stroke="#8a8a8a" stroke-width="2.5" fill="none"/><ellipse cx="40" cy="30" rx="5" ry="9" fill="#fff" opacity=".35"/>`
+};
+const pic=(k,s)=>`<svg viewBox="0 0 100 100" width="${s||90}" height="${s||90}">${PICS[k]}</svg>`;
+const FRUITS=[['ringo','apple'],['mikan','orange'],['ichigo','strawberry'],['banana','banana'],['budou','grapes']];
+const WORDS=[['ringo','り'],['mikan','み'],['ichigo','い'],['banana','ば'],['budou','ぶ'],['hana','は'],['sakana','さ'],['taiyou','た'],['tsuki','つ'],['kumo','く'],['ame','あ'],['kasa','か'],['fuusen','ふ']];
+function clockSVG(h,m,s){s=s||130;const ha=((h%12)+m/60)*30,ma=m*6;let t='';for(let i=1;i<=12;i++){const a=i*30*Math.PI/180;t+=`<text x="${50+36*Math.sin(a)}" y="${54-36*Math.cos(a)}" text-anchor="middle" font-size="11" font-weight="800" fill="#3c3c3c" font-family="sans-serif">${i}</text>`}
+ return `<svg viewBox="0 0 100 100" width="${s}" height="${s}"><circle cx="50" cy="50" r="46" fill="#fff" stroke="#3c3c3c" stroke-width="4"/>${t}
+ <line x1="50" y1="50" x2="${50+22*Math.sin(ha*Math.PI/180)}" y2="${50-22*Math.cos(ha*Math.PI/180)}" stroke="#ff4b4b" stroke-width="6" stroke-linecap="round"/>
+ <line x1="50" y1="50" x2="${50+33*Math.sin(ma*Math.PI/180)}" y2="${50-33*Math.cos(ma*Math.PI/180)}" stroke="#1cb0f6" stroke-width="4" stroke-linecap="round"/><circle cx="50" cy="50" r="4" fill="#3c3c3c"/></svg>`}
+function diceSVG(n,s){const P={1:[[50,50]],2:[[28,28],[72,72]],3:[[26,26],[50,50],[74,74]],4:[[28,28],[72,28],[28,72],[72,72]],5:[[26,26],[74,26],[50,50],[26,74],[74,74]],6:[[28,24],[72,24],[28,50],[72,50],[28,76],[72,76]]}[n];
+ return `<svg viewBox="0 0 100 100" width="${s}" height="${s}"><rect x="6" y="6" width="88" height="88" rx="18" fill="#fff" stroke="#3c3c3c" stroke-width="5"/>${P.map(([x,y])=>`<circle cx="${x}" cy="${y}" r="9" fill="${n===1?'#ff4b4b':'#3c3c3c'}"/>`).join('')}</svg>`}
+const group=(n,k,s)=>`<div style="display:flex;flex-wrap:wrap;gap:4px;justify-content:center;max-width:${s?5*(s+4):260}px">${Array.from({length:n},()=>pic(k,s||40)).join('')}</div>`;
+const kid=c=>'k_'+c.charCodeAt(0).toString(16);
+const HIRA='あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん';
+const toKata=c=>String.fromCharCode(c.charCodeAt(0)+0x60);
+const NUMJ=['','いち','に','さん','よん','ご','ろく','なな','はち','きゅう','じゅう'];
+const NUME=['','one','two','three','four','five','six','seven','eight','nine','ten'];
+
+/* ===================== もんだい（自動生成） ===================== */
+// 各ジェネレーターは {txt, say:[clip...], stage:html, opts:[{h, cls, ok, say}], cols}
+const ans4=(a,rest)=>[a,...shuffle(rest).slice(0,3)];
+function mk(txt,sayIds,stage,opts,cls,cols){return {txt,say:sayIds,stage,opts:shuffle(opts),cls,cols}}
+function distinct(arr,n,keyf){const out=[],seen=new Set();for(const x of shuffle(arr)){const k=keyf?keyf(x):x;if(seen.has(k))continue;seen.add(k);out.push(x);if(out.length===n)break}return out}
+const G={
+ iro(){const cs=distinct(COLORS,4),a=cs[0];const blob=`<svg viewBox="0 0 100 100" width="110" height="110"><path d="M50 8c22 0 40 14 40 38 0 26-18 46-42 46S10 76 10 52C10 26 28 8 50 8z" fill="${a[3]}"/><ellipse cx="36" cy="34" rx="8" ry="12" fill="#fff" opacity=".3"/></svg>`;
+  return mk('おなじ いろは どれかな？',[],blob,cs.map(c=>({h:shapeSVG(pick(SHAPES)[0],c[3],90),ok:c===a})))},
+ katachi(){const ss=distinct(SHAPES,4),a=ss[0];const out=`<svg viewBox="-6 -6 112 112" width="110" height="110"><g fill="none" stroke="#3c3c3c" stroke-width="6" stroke-dasharray="12 8" stroke-linejoin="round">${shapeSVG(a[0],'none',100).replace(/^<svg[^>]*>|<\/svg>$/g,'').replace(/fill="none"/g,'').replace(/stroke="none"/g,'').replace(/stroke-width="\d+"/g,'')}</g></svg>`;
+  return mk('おなじ かたちは どれかな？',[],out,ss.map(s=>({h:shapeSVG(s[0],pick(COLORS.slice(0,7))[3],90),ok:s===a})))},
+ ookisa(){const big=Math.random()<.5,s=pick(SHAPES)[0],col=pick(COLORS.slice(0,7))[3],sz=shuffle([40,58,74,96]);const t=big?Math.max(...sz):Math.min(...sz);
+  return mk(big?'いちばん おおきいのは どれかな？':'いちばん ちいさいのは どれかな？',[big?'q_ookii':'q_chiisai'],'',sz.map(z=>({h:shapeSVG(s,col,z),ok:z===t})))},
+ nagasa(){const lg=Math.random()<.5,col=pick(COLORS.slice(0,7))[3],ls_=shuffle([30,52,74,96]);const t=lg?Math.max(...ls_):Math.min(...ls_);
+  return mk(lg?'いちばん ながいのは どれかな？':'いちばん みじかいのは どれかな？',[lg?'q_nagai':'q_mijikai'],'',ls_.map(l=>({h:`<svg viewBox="0 0 100 30" width="140" height="42"><rect x="${(100-l)/2}" y="9" width="${l}" height="12" rx="6" fill="${col}"/></svg>`,ok:l===t})))},
+ nakama(){const [a,b]=distinct(SHAPES,2),byColor=Math.random()<.4;const [c1,c2]=distinct(COLORS.slice(0,7),2).map(c=>c[3]);
+  const items=[0,1,2,3].map(i=>i===0?(byColor?shapeSVG(a[0],c2,86):shapeSVG(b[0],c1,86)):shapeSVG(a[0],c1,86));
+  return mk('ひとつだけ ちがうのは どれかな？',['q_chigau'],'',items.map((h,i)=>({h,ok:i===0})))},
+ onaji(){const ss=distinct(SHAPES,3),cs=distinct(COLORS.slice(0,7),2).map(c=>c[3]);const a=[ss[0][0],cs[0]];
+  const opts=[[ss[0][0],cs[0]],[ss[0][0],cs[1]],[ss[1][0],cs[0]],[ss[2][0],cs[0]]];
+  return mk('おなじものは どれかな？',['q_onaji'],shapeSVG(a[0],a[1],100),opts.map((o,i)=>({h:shapeSVG(o[0],o[1],80),ok:i===0})))},
+ tsugi(){const [a,b,c]=distinct(SHAPES,3),cs=distinct(COLORS.slice(0,7),3).map(x=>x[3]);const col=s=>s===a?cs[0]:s===b?cs[1]:cs[2];const pat=Math.random()<.5?[a,b]:[a,a,b];
+  const row=[];for(let i=0;i<5;i++)row.push(pat[i%pat.length]);const ans=pat[5%pat.length];
+  const st=row.map(s=>shapeSVG(s[0],col(s),46)).join('')+'<svg viewBox="0 0 100 100" width="46" height="46"><rect x="10" y="10" width="80" height="80" rx="14" fill="none" stroke="#b5b5b5" stroke-width="6" stroke-dasharray="10 8"/><text x="50" y="66" text-anchor="middle" font-size="44" font-weight="900" fill="#b5b5b5">?</text></svg>';
+  return mk('つぎに くるのは どれかな？',['q_tsugi'],st,[a,b,c].map(s=>({h:shapeSVG(s[0],col(s),80),ok:s===ans})),'',3)},
+ kage(){const items=distinct([...SHAPES.map(s=>['s',s[0]]),...['ringo','banana','sakana','kasa','hana','tsuki'].map(k=>['p',k])],3);const a=items[0];
+  const draw=(it,col,s)=>it[0]==='s'?shapeSVG(it[1],col||pick(COLORS.slice(0,7))[3],s):pic(it[1],s);
+  const sil=a[0]==='s'?shapeSVG(a[1],'#3c3c3c',100):`<svg viewBox="0 0 100 100" width="100" height="100" style="filter:brightness(0) opacity(.85)">${PICS[a[1]]}</svg>`;
+  return mk('この かげは どれかな？',['q_kage'],sil,items.map(it=>({h:draw(it,null,84),ok:it===a})),'',3)},
+ kazoe(max,min){min=min||1;const n=R(min,max),k=pick(FRUITS)[0];const opts=ans4(n,[...Array(max)].map((_,i)=>i+1).filter(x=>x!==n));
+  return mk('いくつ あるかな？',['q_ikutsu'],group(n,k,n>6?34:44),opts.map(v=>({h:v,cls:'num',ok:v===n,say:['n_'+v]})))},
+ suuji(){const n=R(1,6),opts=ans4(n,[1,2,3,4,5,6].filter(x=>x!==n));return mk('さいころの かずは いくつかな？',[],diceSVG(n,130),opts.map(v=>({h:v,cls:'num',ok:v===n})))},
+ ooi(){const few=Math.random()<.4;let a=R(1,8),b=R(1,8);while(a===b)b=R(1,8);const k=pick(FRUITS)[0];const t=few?Math.min(a,b):Math.max(a,b);
+  return mk(few?'すくないのは どっちかな？':'おおいのは どっちかな？',[few?'q_sukunai':'q_ooi'],'',[a,b].map(v=>({h:group(v,k,30),ok:v===t})),'',2)},
+ onajikazu(){const n=R(1,8),k=pick(FRUITS)[0],vals=ans4(n,[1,2,3,4,5,6,7,8,9].filter(x=>x!==n));
+  return mk('すうじと おなじ かずは どれかな？',['n_'+n,'q_kazu'],`<div style="font-size:90px;line-height:1">${n}</div>`,vals.map(v=>({h:group(v,k,26),ok:v===n})))},
+ tashi(max){const a=R(1,max-1),b=R(1,max-a),n=a+b,k=pick(FRUITS)[0];const opts=ans4(n,[...Array(10)].map((_,i)=>i+1).filter(x=>x!==n));
+  return mk('あわせて いくつかな？',['q_awasete'],`${group(a,k,36)}<div style="font-size:44px;color:#b5b5b5;padding:0 4px">+</div>${group(b,k,36)}`,opts.map(v=>({h:v,cls:'num',ok:v===n,say:['n_'+v]})))},
+ hiki(){const a=R(2,6),b=R(1,a-1),n=a-b,k=pick(FRUITS)[0];const items=[...Array(a)].map((_,i)=>`<div style="position:relative">${pic(k,56)}${i>=n?'<svg viewBox="0 0 100 100" width="56" height="56" style="position:absolute;left:0;top:0"><path d="M15 15L85 85M85 15L15 85" stroke="#3c3c3c" stroke-width="10" stroke-linecap="round" opacity=".7"/></svg>':''}</div>`).join('');
+  const opts=ans4(n,[0,1,2,3,4,5,6].filter(x=>x!==n&&x>0));
+  return mk('のこりは いくつかな？',['q_nokori'],`<div style="display:flex;flex-wrap:wrap;gap:4px;justify-content:center">${items}</div>`,opts.map(v=>({h:v,cls:'num',ok:v===n,say:['n_'+v]})))},
+ kana(set){const a=pick(set),others=distinct(set.filter(x=>x!==a),3);
+  return mk('おなじ もじは どれかな？',[],`<div class="bigch">${a}</div>`,[a,...others].map(c=>({h:c,cls:'kana',ok:c===a})))},
+ kata(set){const a=pick(set),others=distinct(set.filter(x=>x!==a),3);
+  return mk('カタカナで かくと どれかな？',[],`<div class="bigch">${a}</div>`,[a,...others].map(c=>({h:toKata(c),cls:'kana',ok:c===a})))},
+ daku(){const p=pick(DAKUP),base=p[0],ans=p[1],mark=DAKU.includes(ans)&&'ぱぴぷぺぽ'.includes(ans)?'゜':'゛';const others=distinct(DAKUP.filter(x=>x!==p).map(x=>x[1]),2);
+  return mk('てんてん・まるを つけると どれかな？',[],`<div class="bigch">${base}<span style="color:#b5b5b5;font-size:60px;padding:0 10px;vertical-align:middle">＋</span><span style="color:var(--c)">${mark}</span></div>`,[ans,base,...others].map(c=>({h:c,cls:'kana',ok:c===ans})))},
+ hajime(){const w=pick(WORDS),pool=distinct(HIRA.split('').filter(c=>c!==w[1]&&!WORDS.some(x=>x[1]===c&&x!==w)),3);
+  return mk('はじめの もじは どれかな？',['w_'+w[0],'q_hajime'],pic(w[0],120),[w[1],...pool].map(c=>({h:c,cls:'kana',ok:c===w[1]})))},
+ abc(){const a=pick(ABC),o=distinct(ABC.filter(x=>x!==a),3);return mk('おなじ もじは どれかな？',[],`<div class="bigch en">${a}</div>`,[a,...o].map(c=>({h:c,cls:'kana en',ok:c===a})))},
+ abcs(){const a=pick(ABC),o=distinct(ABC.filter(x=>x!==a),3);return mk('おなじ もじは どれかな？',[],`<div class="bigch en">${a.toLowerCase()}</div>`,[a,...o].map(c=>({h:c.toLowerCase(),cls:'kana en',ok:c===a})))},
+ abcpair(){const a=pick(ABC),o=distinct(ABC.filter(x=>x!==a),3);return mk('こもじに すると どれかな？',[],`<div class="bigch en">${a}</div>`,[a,...o].map(c=>({h:c.toLowerCase(),cls:'kana en',ok:c===a})))},
+ abcnext(){const i=R(0,22),row=ABC.slice(i,i+3),ans=ABC[i+3],o=distinct(ABC.filter(x=>x!==ans&&!row.includes(x)),2);
+  return mk('つぎに くる もじは どれかな？',[],`<div class="bigch en" style="font-size:64px;letter-spacing:6px">${row.join(' ')} <span style="color:#b5b5b5">?</span></div>`,[ans,...o].map(c=>({h:c,cls:'kana en',ok:c===ans})),'',3)},
+ nanji(half){const h=R(1,12),hs=ans4(h,[1,2,3,4,5,6,7,8,9,10,11,12].filter(x=>x!==h));const lab=x=>half?`${x}じはん`:`${x}じ`;
+  return mk('なんじ かな？',['q_nanji'],clockSVG(h,half?30:0,150),hs.map(x=>({h:lab(x),cls:'txt',ok:x===h,say:['t_'+x+(half?'h':'')]})))},
+ tokei(){const half=Math.random()<.4,h=R(1,12),hs=ans4(h,[1,2,3,4,5,6,7,8,9,10,11,12].filter(x=>x!==h));
+  return mk('おなじ じかんの とけいは どれかな？',[],`<div class="digi">${h}:${half?'30':'00'}</div>`,hs.map(x=>({h:clockSVG(x,half?30:0,110),ok:x===h})))},
+ mixE(){return pick([G.abc,G.abcpair,G.abcnext,()=>G.nanji(0),()=>G.nanji(1)])()}
+};
+const ROWS=[HIRA.slice(0,10),HIRA.slice(10,20),HIRA.slice(20,30),HIRA.slice(30)].map(r=>r.split(''));
+const DAKU='がぎぐげござじずぜぞだでどばびぶべぼぱぴぷぺぽ'.split('');
+const DAKUP=DAKU.map(c=>[String.fromCharCode(c.charCodeAt(0)-('ぱぴぷぺぽ'.includes(c)?2:1)),c]);
+const ABC='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+const CATS=[
+ {k:'chie',n:'ちえ',ic:'bulb',c:'#ff9600',cd:'#d97000',cl:'#fff1dc',st:[['いろ',G.iro],['かたち',G.katachi],['おおきい・ちいさい',G.ookisa],['ながい・みじかい',G.nagasa],['なかまはずれ',G.nakama],['おなじもの',G.onaji],['つぎは なにかな',G.tsugi],['かげあわせ',G.kage]]},
+ {k:'kazu',n:'かず',ic:'dice',c:'#1cb0f6',cd:'#1899d6',cl:'#ddf4ff',st:[['かぞえよう 1〜5',()=>G.kazoe(5)],['かぞえよう 6〜10',()=>G.kazoe(10,5)],['さいころ',G.suuji],['おおい・すくない',G.ooi],['おなじ かず',G.onajikazu],['たしざん 5まで',()=>G.tashi(5)],['のこりは いくつ',G.hiki],['たしざん 10まで',()=>G.tashi(10)]]},
+ {k:'moji',n:'もじ',ic:'aa',c:'#e8508a',cd:'#c23a6f',cl:'#fde0eb',st:[['あ〜こ',()=>G.kana(ROWS[0])],['さ〜と',()=>G.kana(ROWS[1])],['な〜ほ',()=>G.kana(ROWS[2])],['ま〜ん',()=>G.kana(ROWS[3])],['てんてん・まる',G.daku],['カタカナ ア〜ト',()=>G.kata([...ROWS[0],...ROWS[1]])],['カタカナ ナ〜ン',()=>G.kata([...ROWS[2],...ROWS[3]].filter(c=>c!=='を'))],['はじめの もじ',G.hajime]]},
+ {k:'eigo',n:'ABC・とけい',ic:'abc',c:'#a560e8',cd:'#8445c2',cl:'#f1e3ff',st:[['おおもじ ABC',G.abc],['こもじ abc',G.abcs],['おおもじと こもじ',G.abcpair],['ABCの じゅんばん',G.abcnext],['とけい 〇じ',()=>G.nanji(0)],['とけい 〇じはん',()=>G.nanji(1)],['とけいを えらぼう',G.tokei],['まとめ',G.mixE]]}
+];
+let ALL=[];CATS.forEach((c,ci)=>c.st.forEach((s,si)=>ALL.push({ci,si,id:ci*8+si,key:c.k+'-'+si,n:s[0],gen:s[1],hue:(ci*8+si)*41%360})));
+const starsOf=s=>PROG[s.key]||0;
+
+/* ===================== 画面 ===================== */
+function curCat(){const c=parseInt(ls(CK),10);return CATS[c]?c:0}
+function setCat(i){ls(CK,String(i));renderHome()}
+function setTheme(c){const r=document.documentElement.style;r.setProperty('--c',c.c);r.setProperty('--cd',c.cd);r.setProperty('--cl',c.cl)}
+function go(id){stopSay();document.querySelectorAll('.scr').forEach(s=>s.classList.toggle('on',s.id===id));
+ document.body.classList.toggle('navon',id==='sHome'||id==='sZukan');
+ document.querySelectorAll('#bnav button[data-k]').forEach(b=>b.classList.toggle('on',(b.dataset.k==='home'&&id==='sHome')||(b.dataset.k==='zukan'&&id==='sZukan')));
+ document.body.classList.toggle('navon',['sHome','sZukan','sGame'].includes(id));
+ document.querySelectorAll('#bnav button[data-k=game]').forEach(b=>b.classList.toggle('on',id==='sGame'));
+ if(id==='sHome')renderHome();if(id==='sZukan')renderZukan();window.scrollTo(0,0)}
+const XS=[0,60,84,60,0,-60,-84,-60];
+function renderHome(){showTrial();drawSnd();const ci=curCat(),C=CATS[ci];setTheme(C);
+ document.getElementById('stars').textContent=ALL.reduce((a,s)=>a+starsOf(s),0);
+ document.getElementById('cats').innerHTML=CATS.map((c,i)=>`<button class="cat ${i===ci?'on':''}" style="${i===ci?`--c:${c.c};--cl:${c.cl}`:''}" onclick="setCat(${i})"><div class="ci" style="background:${c.c};box-shadow:0 3px 0 ${c.cd}">${IC[c.ic]}</div><b>${c.n}</b></button>`).join('');
+ const st=ALL.filter(s=>s.ci===ci),nx=st.find(s=>!starsOf(s))||st.find(s=>starsOf(s)<3)||st[0];
+ document.getElementById('band').innerHTML=`<div><small>${C.n}・つぎは</small><b>${nx.n}</b></div><button class="go" onclick="openStage(${nx.id})" aria-label="あそぶ">${IC.play}</button>`;
+ document.getElementById('path').innerHTML=st.map((s,k)=>{const v=starsOf(s),cur=s===nx;const cls=cur?'cur':v===3?'gold':v?'done':'todo';
+  return `<div class="nrow" style="--x:${XS[k%8]}px">${cur?'<div class="bub">スタート</div>':''}<button class="node ${cls}" onclick="openStage(${s.id})" aria-label="${s.n}">${cur?IC.play:v===3?IC.star:v?IC.check:k+1}</button>
+   <div class="nst">${[1,2,3].map(n=>`<span class="${n<=v?'on':''}">${IC.star}</span>`).join('')}</div><div class="nt">${s.n}</div>
+   ${k%2?`<div class="nmon ${XS[k%8]>0?'l':'r'} ${v?'':'dim'}">${monSVG({id:s.id,hue:s.hue},v===3)}</div>`:''}</div>`}).join('')}
+
+/* ===================== あそぶ ===================== */
+let S=null,Q=null;
+function openStage(id){if(!guard())return;S=ALL[id];setTheme(CATS[S.ci]);S.q=[];S.k=0;S.first=0;go('sQuiz');showQ()}
+function showQ(){Q=S.gen();Q.tries=0;Q.lock=false;
+ document.getElementById('qBar').style.width=(S.k/5*100)+'%';
+ document.getElementById('qTxt').textContent=Q.txt;
+ document.getElementById('stage').innerHTML=Q.stage||'';
+ const o=document.getElementById('opts');o.className='opts'+(Q.cols===3?' three':'');
+ o.innerHTML=Q.opts.map((x,i)=>`<button class="opt ${x.cls||''}" data-i="${i}" onclick="tap(${i})">${x.h}</button>`).join('');
+ }
+function tap(i){if(Q.lock)return;const x=Q.opts[i],el=document.querySelector(`.opt[data-i="${i}"]`);
+ if(x.ok){Q.lock=true;el.classList.add('ok');sfx('ok');if(!Q.tries)S.first++;const b=document.getElementById('big');b.classList.remove('show');void b.offsetWidth;b.classList.add('show');
+  setTimeout(()=>{S.k++;if(S.k<5)showQ();else finish()},1500)}
+ else{Q.tries++;el.classList.remove('ng');void el.offsetWidth;el.classList.add('ng');sfx('ng')}}
+function finish(){const st=S.first===5?3:S.first>=4?2:1,prev=starsOf(S),isNew=!prev;if(st>prev){PROG[S.key]=st;ls(PK,JSON.stringify(PROG))}
+ document.getElementById('qBar').style.width='100%';sfx('fin');setTimeout(()=>confetti(isNew?90:50),200);
+ const nx=ALL.filter(s=>s.ci===S.ci)[S.si+1];
+ document.getElementById('res').innerHTML=`<div class="mon">${monSVG({id:S.id,hue:S.hue},st===3)}</div><h2>${isNew?'あたらしい なかま！':'クリア！'}</h2>
+  <div class="bigst">${[1,2,3].map(n=>`<span class="${n<=st?'on':''}">${IC.star}</span>`).join('')}</div>
+  ${nx?`<button class="btn pri" onclick="openStage(${nx.id})">つぎの ステージ</button>`:''}<button class="btn ${nx?'sub':'pri'}" onclick="openStage(${S.id})">もういちど</button><button class="btn sub" onclick="go('sHome')">もどる</button>`;
+ go('sResult')}
+function renderZukan(){document.getElementById('zk').innerHTML=ALL.map(s=>{const v=starsOf(s);return v?`<div class="zc ${v===3?'shiny':''}">${monSVG({id:s.id,hue:s.hue},v===3)}</div>`:`<div class="zc no">?</div>`}).join('')}
+
+/* ===================== あそびば ===================== */
+let GM=null;
+function endGame(){if(GM&&GM.timer)clearInterval(GM.timer);if(GM&&GM.to)clearTimeout(GM.to);GM=null}
+function startGame(k){if(!guard())return;endGame();GM={k};go('sPlay');({memory:gMemory,touch:gTouch,balloon:gBalloon,maze:gMaze})[k]()}
+function gDone(msg){const k=GM.k;endGame();sfx('fin');confetti(70);
+ document.getElementById('gBoard').innerHTML=`<div class="gdone"><div style="width:150px;height:150px;margin:0 auto">${monSVG({id:R(0,31),hue:R(0,359)},true)}</div><h2>できたね！</h2><p style="color:var(--mute)">${msg||''}</p>
+ <button class="btn pri" onclick="startGame('${k}')">もういちど</button><button class="btn sub" onclick="go('sGame')">ほかの ゲーム</button></div>`}
+function gMemory(){const ks=distinct(Object.keys(PICS),6),cards=shuffle([...ks,...ks]);let open=[],got=0,moves=0;
+ document.getElementById('gHead').textContent='おなじ えを 2まい さがそう';
+ const b=document.getElementById('gBoard');b.innerHTML=`<div class="mem">${cards.map((k,i)=>`<button class="mc" data-i="${i}"><div class="bk"></div>${pic(k,80)}</button>`).join('')}</div>`;
+ b.querySelectorAll('.mc').forEach(el=>el.onclick=()=>{if(!GM||el.classList.contains('open')||el.classList.contains('got')||open.length>=2)return;el.classList.add('open');open.push(el);
+  if(open.length===2){moves++;const [x,y]=open;if(cards[x.dataset.i]===cards[y.dataset.i]){sfx('ok');setTimeout(()=>{x.classList.add('got');y.classList.add('got');x.classList.remove('open');y.classList.remove('open');open=[];if(++got===6)setTimeout(()=>gDone(`${moves}かいで ぜんぶ みつけたよ`),500)},300)}
+   else GM.to=setTimeout(()=>{x.classList.remove('open');y.classList.remove('open');open=[]},900)}})}
+function gTouch(){const N=10,cols=['#ff4b4b','#1cb0f6','#ffc800','#58cc02','#ce82ff','#ff9600'];let nx=1;const t0=Date.now();
+ const cells=shuffle([...Array(20)].map((_,i)=>i)).slice(0,N);
+ const head=()=>document.getElementById('gHead').innerHTML=`つぎは <b style="font-size:30px;color:var(--green)">${nx}</b>`;head();
+ const b=document.getElementById('gBoard');b.innerHTML=`<div class="tch">${cells.map((c,i)=>`<button class="tn" data-n="${i+1}" style="left:${12.5+(c%4)*25}%;top:${10+Math.floor(c/4)*20}%;background:${cols[i%6]}">${i+1}</button>`).join('')}</div>`;
+ b.querySelectorAll('.tn').forEach(el=>el.onclick=()=>{if(+el.dataset.n===nx){el.classList.add('done');sfx('ok');nx++;if(nx>N){const sec=Math.round((Date.now()-t0)/1000),best=+(ls(APP_ID+'_touch_best')||0);if(!best||sec<best)ls(APP_ID+'_touch_best',String(sec));gDone(`${sec}びょう でできたよ`+(best&&sec>=best?`（さいこう ${best}びょう）`:''))}else head()}
+  else{el.classList.remove('ng');void el.offsetWidth;el.classList.add('ng');sfx('ng')}})}
+function gBalloon(){const cs=COLORS.slice(0,7),tg=pick(cs);let hit=0;const GOAL=8;
+ const head=()=>document.getElementById('gHead').innerHTML=`<span class="tgt" style="background:${tg[3]}"></span> の ふうせんを わろう <b style="margin-left:auto">${hit} / ${GOAL}</b>`;head();
+ const b=document.getElementById('gBoard');b.innerHTML='<div class="sky" id="sky"></div>';const sky=document.getElementById('sky');
+ const spawn=()=>{if(!GM)return;const c=Math.random()<.4?tg:pick(cs),el=document.createElement('button');el.className='bl';el.style.left=R(2,78)+'%';el.style.animationDuration=(5.5+Math.random()*2.5)+'s';
+  el.innerHTML=`<svg viewBox="0 0 70 96" width="70" height="96"><ellipse cx="35" cy="36" rx="30" ry="34" fill="${c[3]}"/><path d="M31 69l4 6 4-6z" fill="${c[3]}"/><path d="M35 75c-5 7 5 9 0 18" stroke="#8a8a8a" stroke-width="2" fill="none"/><ellipse cx="24" cy="24" rx="6" ry="10" fill="#fff" opacity=".35"/></svg>`;
+  el.onclick=()=>{if(el.classList.contains('pop'))return;if(c===tg){el.classList.add('pop');sfx('ok');hit++;head();setTimeout(()=>el.remove(),260);if(hit>=GOAL)setTimeout(()=>gDone('ぜんぶ われたね'),300)}else{sfx('ng');el.style.filter='grayscale(.6)'}};
+  el.addEventListener('animationend',e=>{if(e.animationName==='rise')el.remove()});sky.appendChild(el)};
+ spawn();GM.timer=setInterval(spawn,900)}
+function gMaze(){const W=6,H=8,cell=Math.floor(Math.min(innerWidth-40,560)/W);const g=[...Array(W*H)].map(()=>({w:[1,1,1,1],v:0}));// 上右下左
+ const st=[0];g[0].v=1;while(st.length){const c=st[st.length-1],x=c%W,y=(c/W)|0;const nb=[[0,-1,0],[1,0,1],[0,1,2],[-1,0,3]].map(([dx,dy,d])=>[x+dx,y+dy,d]).filter(([a,b])=>a>=0&&b>=0&&a<W&&b<H&&!g[b*W+a].v);
+  if(!nb.length){st.pop();continue}const [a,b2,d]=pick(nb),n=b2*W+a;g[c].w[d]=0;g[n].w[(d+2)%4]=0;g[n].v=1;st.push(n)}
+ document.getElementById('gHead').textContent='ゆびで なぞって ゴールまで いこう';
+ const cv=document.createElement('canvas'),dpr=devicePixelRatio||1;cv.className='mz';cv.width=W*cell*dpr;cv.height=H*cell*dpr;cv.style.width=W*cell+'px';cv.style.height=H*cell+'px';
+ const b=document.getElementById('gBoard');b.innerHTML='';b.appendChild(cv);const c=cv.getContext('2d');c.scale(dpr,dpr);
+ let pos=0;const path=[0];
+ function draw(){c.clearRect(0,0,W*cell,H*cell);c.fillStyle='#fff4d6';c.fillRect((W-1)*cell,(H-1)*cell,cell,cell);
+  c.font=`900 ${cell*.22}px sans-serif`;c.textAlign='center';c.textBaseline='middle';c.fillStyle='#e5a500';c.fillText('ゴール',(W-.5)*cell,(H-.5)*cell);
+  c.strokeStyle='#ff9600';c.lineWidth=cell*.28;c.lineCap='round';c.lineJoin='round';c.beginPath();path.forEach((p,i)=>{const X=(p%W+.5)*cell,Y=(((p/W)|0)+.5)*cell;i?c.lineTo(X,Y):c.moveTo(X,Y)});c.stroke();
+  c.strokeStyle='#3c3c3c';c.lineWidth=4;c.lineCap='round';c.beginPath();g.forEach((q,i)=>{const x=(i%W)*cell,y=((i/W)|0)*cell;if(q.w[0]){c.moveTo(x,y);c.lineTo(x+cell,y)}if(q.w[1]){c.moveTo(x+cell,y);c.lineTo(x+cell,y+cell)}if(q.w[2]){c.moveTo(x,y+cell);c.lineTo(x+cell,y+cell)}if(q.w[3]){c.moveTo(x,y);c.lineTo(x,y+cell)}});c.stroke();
+  const X=(pos%W+.5)*cell,Y=(((pos/W)|0)+.5)*cell;c.fillStyle='#1cb0f6';c.beginPath();c.arc(X,Y,cell*.3,0,7);c.fill()}
+ draw();
+ const move=e=>{if(!GM)return;e.preventDefault();const r=cv.getBoundingClientRect(),t=e.touches?e.touches[0]:e;const x=Math.floor((t.clientX-r.left)/cell),y=Math.floor((t.clientY-r.top)/cell);if(x<0||y<0||x>=W||y>=H)return;const n=y*W+x;if(n===pos)return;
+  const px=pos%W,py=(pos/W)|0,dirs={'0,-1':0,'1,0':1,'0,1':2,'-1,0':3},d=dirs[(x-px)+','+(y-py)];if(d===undefined||g[pos].w[d])return;
+  if(path.length>1&&path[path.length-2]===n)path.pop();else path.push(n);pos=n;draw();if(pos===W*H-1){sfx('ok');setTimeout(()=>gDone('ゴール！'),300)}};
+ cv.addEventListener('touchstart',move,{passive:false});cv.addEventListener('touchmove',move,{passive:false});cv.addEventListener('mousemove',e=>{if(e.buttons)move(e)});cv.addEventListener('mousedown',move)}
+
+/* ===================== PWA ===================== */
+(function(){const ICON='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';const m={name:'学びのミカタ キッズ',short_name:'ミカタ キッズ',start_url:'./',display:'standalone',background_color:'#ffffff',theme_color:'#ffffff',orientation:'portrait',
+ icons:[{src:'data:image/png;base64,'+ICON,sizes:'192x192',type:'image/png',purpose:'any maskable'},{src:'data:image/png;base64,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SAAAECgSAAAEigQAAIEiAQBAoEgAABAoEgAABIoEAACBIgEAQKBIAAAQKBIAAASKBAAAgSIBAECgSAAAECgSAAAEigQAAIEiAQBAoEgAABAoEgAABIoEAACBIgEAQKBIAAAQKBIAAASKBAAAgSIBAECgSAAAECgSAAAEigQAAIEiAQBAoEgAABAoEgAABIoEAACBIgEAQKBIAAAQKBIAAASqIFGg7xwAAle4/SDwzwAABKrQWA30nQNA4Ao5SkAAECSawAAQKBIAAASKBAAAgSIBAECgSAAAECgSAAAEigQAAIEiAQBAoEgAABAoEgAABIoEAACBIgEAQKBIAAAQKBIAAASKBAAAgSIBAECgSAAAECgSAAAEigQAAIEiAQBAoEgAABAoEgAABIoEAACBIgEAQKBIAAAQKBIAAASKBAAAgSIBAECgSAAAECgSAAAEigQAAIEiAQBAoEgAABAoEgAABIoEAACBIgEAQKBIAAAQKBIAAASKBAAAgSIBAECgSAAAECgSAAAEigQAAIEiAQBAoEgAABAoEgAABIoEAACBIgEAQKBIAAAQKBIAAASKBAAAgSIBAECgSAAAECgSAAAEigQAAIEiAQBAoEgAABAoEgAABIoEAACBIgEAQKBIAAAQKBIAAASKBAAAgSIBAECgSAAAECgSAAAEigQAAIEiAQBAoEgAABCo/w9zpShs+ZeXWwAAAABJRU5ErkJggg==',sizes:'512x512',type:'image/png',purpose:'any maskable'}]};
+ const l=document.createElement('link');l.rel='manifest';l.href=URL.createObjectURL(new Blob([JSON.stringify(m)],{type:'application/json'}));document.head.appendChild(l);
+ const a=document.createElement('link');a.rel='apple-touch-icon';a.href='data:image/png;base64,'+ICON;document.head.appendChild(a);
+ [['apple-mobile-web-app-capable','yes'],['apple-mobile-web-app-title','ミカタ キッズ']].forEach(([n,c])=>{const e=document.createElement('meta');e.name=n;e.content=c;document.head.appendChild(e)})})();
+go('sHome');
+</script>
+</body>
+</html>
